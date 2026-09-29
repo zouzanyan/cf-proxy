@@ -1,0 +1,23 @@
+name = "cf-proxy"
+main = "src/index.js"
+compatibility_date = "2024-09-23"
+
+# 可选：绑定自己的域名（部署后把域名 DNS 托管到 Cloudflare 再启用）
+# routes = [
+#   { pattern = "api.example.com/*", zone_name = "example.com" }
+# ]
+
+# 环境变量（优先级高于 src/index.js 顶部 CONFIG 中的同名配置）：
+# - PROXY_TOKEN: 访问令牌。设置后，请求必须带 x-proxy-token 头或 Authorization: Bearer <token>
+#   部署时用 secret 更安全：npx wrangler secret put PROXY_TOKEN
+# - ALLOWED_HOSTS: /proxy 通用转发的域名限制（可选，逗号分隔；"*" 或不设置 = 全放开）
+#   例：ALLOWED_HOSTS = "api.openai.com,api.anthropic.com"
+[vars]
+# 鉴权令牌：所有请求必须带 Authorization: Bearer <token> 或 x-proxy-token: <token>
+# 更安全的做法：wrangler.toml 里删掉这行，改用 secret（npx wrangler secret put PROXY_TOKEN），
+# secret 不会出现在代码仓库里，且可随时轮换
+PROXY_TOKEN = "88d683b6d09260bfbbc13c23b5028d77975f70e5812643f7"
+# ALLOWED_HOSTS = "*"
+
+[observability]
+enabled = true
